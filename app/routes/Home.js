@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    TouchableHighlight,
     AppRegistry,
     StyleSheet,
     Text,
@@ -7,6 +8,19 @@ import {
 } from 'react-native';
 
 export default class mobidemo extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            value: 0
+        }
+        this.updateState = this.updateState.bind(this)
+    }
+    updateState() {
+        this.setState({
+            value: this.state.value + 1
+        })
+
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -20,6 +34,10 @@ export default class mobidemo extends Component {
                     Double tap R on your keyboard to reload,{'\n'}
                     Shake or press menu button for dev menu
         </Text>
+                <TouchableHighlight onPress={this.updateState}>
+                    <Text>Update State</Text>
+                </TouchableHighlight>
+                <Text>State Value = {this.state.value}</Text>
             </View>
         );
     }
