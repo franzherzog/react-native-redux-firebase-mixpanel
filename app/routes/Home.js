@@ -75,4 +75,3 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 export default connect(mapStateToProps, mapDispatchProps)(mobidemo)
-// export default connect(()=>{return {}}, mapDispatchProps)(mobidemo)

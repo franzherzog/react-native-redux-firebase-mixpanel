@@ -9,6 +9,8 @@
   "dependencies": {
     "react": "15.3.2",
     "react-native": "0.37.0",
+    "react-native-device-info": "^0.9.6",
+    "react-native-mixpanel": "0.0.10",
     "react-native-router-flux": "^3.37.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",
