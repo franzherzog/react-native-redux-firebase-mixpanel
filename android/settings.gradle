@@ -1,0 +1,3 @@
+rootProject.name = 'mobidemo'
+
+include ':app'
