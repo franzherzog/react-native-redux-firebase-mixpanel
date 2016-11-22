@@ -1,25 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
     TouchableHighlight,
-    AppRegistry,
     StyleSheet,
     Text,
     View
-} from 'react-native';
+} from 'react-native'
 
-export default class mobidemo extends Component {
+import { connect } from 'react-redux'
+import { ActionCreators } from '../actions'
+import { bindActionCreators } from 'redux'
+
+class mobidemo extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            value: 0
-        }
         this.updateState = this.updateState.bind(this)
     }
     updateState() {
-        this.setState({
-            value: this.state.value + 1
-        })
-
+        this.props.addTodo()
     }
     render() {
         return (
@@ -37,7 +34,7 @@ export default class mobidemo extends Component {
                 <TouchableHighlight onPress={this.updateState}>
                     <Text>Update State</Text>
                 </TouchableHighlight>
-                <Text>State Value = {this.state.value}</Text>
+                <Text>State Value = {this.props.todoState}</Text>
             </View>
         );
     }
@@ -60,4 +57,15 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
-});
+})
+
+const mapDispatchProps = (dispatch) => {
+    return bindActionCreators(ActionCreators, dispatch)
+}
+const mapStateToProps = (state, ownProps) => {
+    return {
+        todoState: state.addTodo
+    }
+}
+export default connect(mapStateToProps, mapDispatchProps)(mobidemo)
+// export default connect(()=>{return {}}, mapDispatchProps)(mobidemo)
