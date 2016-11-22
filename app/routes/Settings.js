@@ -20,7 +20,7 @@ class mobidemo extends Component {
         this.props.addTodo()
     }
     updateRoute() {
-        Actions.settings()
+        Actions.home()
     }
     render() {
         return (
