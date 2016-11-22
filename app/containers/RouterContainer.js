@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Router, Scene } from 'react-native-router-flux'
 import { connect } from 'react-redux'
-import { Text } from 'react-native'
-const RouterWithRedux = connect()(Router)
 
 import Home from '../routes/Home'
 import Settings from '../routes/Settings'
+
+const RouterWithRedux = connect()(Router)
 
 export default ReduxRouter = () => {
     return (
