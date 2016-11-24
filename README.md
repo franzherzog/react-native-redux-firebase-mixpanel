@@ -30,5 +30,24 @@
 - [x] Use Firebase with Redux
 
 
+```
+ entrypoint for android => ./index.android.js
+
+ starting point react code in ./app
+```
+
+  | -- actions       // redux actions + logic
+  
+  |-- containers    // container ( redux binding, store init ...)
+  
+  |-- middleware    // redux middleware ( tracking )
+  
+  |-- reducers      // redux reducers
+  
+  |-- routes        // router scenes
+  
+  |-- components    // Todo -> stupid react elements without dependencies
+  
+
 
 
