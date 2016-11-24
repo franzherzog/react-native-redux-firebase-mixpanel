@@ -6,62 +6,44 @@ import {
     View
 } from 'react-native'
 import React, { Component } from 'react'
-import * as firebase from 'firebase'
 
 import { connect } from 'react-redux'
 import { ActionCreators } from '../actions'
 import { bindActionCreators } from 'redux'
 import { Actions } from 'react-native-router-flux'
 
-const config = {
-    apiKey: "AIzaSyCYBBHExOFLthObpYiWqgW8g5B7ENAO5h0",
-    authDomain: "storage-4b40e.firebaseapp.com",
-    databaseURL: "https://storage-4b40e.firebaseio.com",
-    storageBucket: "storage-4b40e.appspot.com",
-    messagingSenderId: "131391384047"
-};
-
-const firebaseApp = firebase.initializeApp(config)
-
 class FirebaseTest extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            dataSource: ['']
-        }
-        this.itemsRef = firebaseApp.database().ref();
         this.addText = this.addText.bind(this)
     }
-    listenForItems(itemsRef) {
-        itemsRef.on('value', (snap) => {
-            // get children as an array
-            var items = [];
-            snap.forEach((child) => {
-                items.push({
-                    title: child.val().text,
-                    _key: child.key
-                });
-            });
-        });
-    }
     componentDidMount() {
-        this.listenForItems(this.itemsRef)
+        this.props.updateTodos() // once
+        // this.props.listenTodos() // subscribe todofh
     }
     addText(text) {
-        this.itemsRef.push({ text })
+        this.props.addTodo(text)
     }
     render() {
-        //render list
-        const data = this.state.dataSource.map((data, i) => {
-            return (<Text key={i}>{data.title}</Text>)
-        })
+        const {todos, inSync} = this.props
+        const list = []
+        const loading = inSync || <Text>...loading</Text>
+
+        for (todo in todos) {
+            list.push(<Text key={todo}>{todos[todo]}</Text>)
+        }
+        // newest on top
+        list.reverse()
         return (
-            <View style={{ marginTop: 50 }}>
+            <View style={{ margin: 70 }}>
                 <Text>Todos</Text>
-                <TouchableOpacity style={styles.button} onPress={() => this.addText('krkrk')}>
-                    <Text>add</Text>
-                    {data}
+                <TouchableOpacity style={styles.button} onPress={() => this.addText('new Todoist')}>
+                    <Text>add new Todo</Text>
                 </TouchableOpacity>
+                <View>
+                    {loading}
+                    {list}
+                </View>
             </View>
         )
     }
@@ -70,9 +52,12 @@ class FirebaseTest extends Component {
 const styles = StyleSheet.create({
     button: {
         borderWidth: 2,
-        borderColor: 'grey',
+        borderColor: 'black',
         backgroundColor: 'grey',
-        width: 40
+        margin: 20,
+        padding: 5,
+        width: 70,
+
     },
     container: {
         flex: 1,
@@ -97,7 +82,8 @@ const mapDispatchProps = (dispatch) => {
 }
 const mapStateToProps = (state, ownProps) => {
     return {
-        todoState: state.addTodo
+        todos: state.todo.todos,
+        inSync: state.todo.inSync
     }
 }
 export default connect(mapStateToProps, mapDispatchProps)(FirebaseTest)

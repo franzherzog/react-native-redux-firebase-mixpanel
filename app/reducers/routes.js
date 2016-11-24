@@ -6,6 +6,7 @@ const initialState = {
 
 export function route(state = initialState, action = {}) {
     switch (action.type) {
+        // make route infos available on state
         case ActionConst.FOCUS:
             return {
                 ...state,
